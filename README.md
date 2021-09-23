@@ -1,4 +1,4 @@
 # LinearArgebla
 pdf of Linear Argebla
 
-If anything is imcomplete, please notify me via twitter(@Ei_Re_).
+If something is imcomplete, please notify me via twitter(@Ei_Re_).
