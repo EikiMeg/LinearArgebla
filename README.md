@@ -1,7 +1,7 @@
 # LinearArgebla
 pdf of Linear ArgeblaCancel changes
 
-If something is imcomplete, please mention at ([Discussions](https://github.com/EikiMeg/LinearArgebla/discussions)).
+If something is imcomplete, please mention at [Discussions](https://github.com/EikiMeg/LinearArgebla/discussions).
 
 【更新履歴】
 
