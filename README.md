@@ -1,5 +1,5 @@
 # LinearArgebla
-pdf of Linear ArgeblaCancel changes
+pdf of Linear Argebla.
 
 If something is imcomplete, please mention at [Discussions](https://github.com/EikiMeg/LinearArgebla/discussions).
 
