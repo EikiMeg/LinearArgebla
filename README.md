@@ -10,3 +10,5 @@ If something is imcomplete, please mention at [Discussions](https://github.com/E
 (数日後、コンセプトが不安定であることを認識し改題と修正を行おうとするが、怠惰故作業が進まない)
 
 10/3 新しい版を書き始める(題:線形代数非入門)
+
+10/5 §2.3 行列の導入まで書き直したので公開。
