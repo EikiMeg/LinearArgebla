@@ -301,10 +301,10 @@ $\bm{x}=(x_1,x_2,\cdots,x_n)\in\mathbb{R}^n$とする。定義より$B\bm{x}=(\d
 添え字に注意せよ。\qed
 \item $\exists B,\forall A,BA=AB=A$であること\\
 $B=\delta_{ij}=\begin{cases}1~(i=j) \\ 0~(i \neq j)\end{cases}$と定めると
-\[(AB)_{ij}=\sum_ka_{ik}\delta_{kj}=a_{ij}~\therefore~AB=A\]
+\[(AB)_{ij}=\sum_ka_{ik}\delta_{kj}=a_{ij}\]
 同様にして$BA=A$も示される。\qed\par
 \end{itemize}
-\paragraph{註}~\\
+(註)\par
 ここで登場した$B$は特に\textbf{単位行列}と呼ばれ、$E$と書かれる。積についての単位元に相当する:
 \[E=\begin{pmatrix}1&0&\cdots&0\\0&1&{}&0\\\vdots&{}&\ddots&\vdots\\0&0&\cdots&1\end{pmatrix}\]\\
 \begin{itemize}
@@ -314,9 +314,33 @@ $B=\delta_{ij}=\begin{cases}1~(i=j) \\ 0~(i \neq j)\end{cases}$と定めると
 \end{itemize}
 以上より、$(M(\mathbb{R}),+,\times)$は環であることが結論づけられた。ここで、一つの重要な命題を述べる。\\
 \prop{2.5.1}行列の積は非可換である。即ち一般的に$AB \neq BA$である。\\\par
-このことは、実際に幾つかの具体例考えれば明らかである。この性質により行列環は\textbf{非可換環}となる。
-
+このことは、実際に幾つかの具体例考えれば明らかである。この性質により行列環は\textbf{非可換環}となる。\newpage
 %subsection終わり
+
+\paragraph{補遺2.1}\par
+2章の最後に、言及し忘れていたことを纏める。\\\par
+\textbf{行列の生成する線形空間の基底と次元}\par
+線形空間$M_{m,n}(\mathbb{R})$を考える。この元の中で、$(i,j)$成分のみ$1$で、他が全て$0$であるようなものを考える。\\
+このようなものを$I_{ij}$と書き、\textbf{行列単位}と呼ぶ。これを用いれば、任意の行列$A=(a_{ij})_{m \times n} \in M_{m,n}(\mathbb{R})$は
+\[A=\sum_{i,j}a_{ij}I_{ij}\]
+と表せる。明らかに、組$\{ I_{11},I_{12},\cdots \}$は$M_{m,n}(\mathbb{R})$の基底であり
+\[\mathrm{dim}M_{m,n}(\mathbb{R})=mn\]
+が言える。(行列単位は$E$で書かれることもあるが、後述の概念と混同するので$I$とした。)\\\par
+\textbf{行列としての数ベクトル}\par
+$n$次元数ベクトル$\bm{x}=(x_1,x_2,\cdots,x_n)\in\mathbb{R}^n$は、一直線に数字が$n$個並んだ行列と同一視できる。即ち
+\[\begin{pmatrix}x_1&x_2&\cdots&x_n\end{pmatrix},\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}\]
+注意しなければならないのは、右(列ベクトル)と左(行ベクトル)で意味が大きく異なることである。なぜなら、右は$1 \times n$行列、左は$n \times 1$行列であり属する線形空間が異なるからである。行列の演算は行や列の数に制約が課されているものがあるため、これは確実に把握する必要がある。\par
+このような数ベクトルを行列の形で記述したものは、行列であるものの数ベクトルと同じくアルファベット太字で表す。\textbf{以後、ベクトルと言った場合にはこの意味の数ベクトルを指すものとする}。\par
+行列はベクトルを並べたものと考えられる。例えば、行列$A=(a_{ij})_{m \times n}$の第$j$列に当たるベクトル$(\bm{a}_j)$とすれば
+\[A=\begin{pmatrix}\bm{a}_1&\bm{a}_2&\cdots&\bm{a}_n\end{pmatrix}\]
+と書ける。必要に応じてこの記法を用いる。\par
+数ベクトルと行列の積は、行列と列ベクトルの(行列としての)積と矛盾しない。\\\par
+\textbf{正方行列と単位行列}\par
+行列の内、$n \times n$行列を$\bm{n}$\textbf{次正方行列}と呼ぶ。明らかに、$n$次正方行列は同一の線形空間内での線形写像となる。また、$n$次正方行列の中で特に2.5節で登場した
+\[E=\begin{pmatrix}1&0&\cdots&0\\0&1&{}&0\\\vdots&{}&\ddots&\vdots\\0&0&\cdots&1\end{pmatrix}\]
+は$\bm{n}$\textbf{次単位行列}と呼ばれる。\textbf{単位行列は行列単位とは異なる概念であるから注意せよ}。$E$が$n$次正方行列であることを強調するために$E_n$と書くことがある。\par
+先述の事項から明らかな通り$E$は恒等写像$id:V \to V:\bm{x}\mapsto\bm{x}$の表現行列である。
+%paragraph終わり
 %section終わり
 
 \section{連立方程式を解く}
