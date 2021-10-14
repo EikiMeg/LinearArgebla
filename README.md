@@ -14,3 +14,5 @@ If something is imcomplete, please mention at [Discussions](https://github.com/E
 10/5 §2.3 行列の導入まで書き直したので公開。
 
 10/13 §2.4-§2.5 行列の演算について書けたので公開。
+
+10/14 補遺2.1を書き、2章が一通り書けたので公開。
