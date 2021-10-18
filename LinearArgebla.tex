@@ -26,7 +26,7 @@
 
 \graphicspath{{./fig/}}
 
-\title{線形代数\.{非}入門}
+\title{ステップアップ線形代数}
 \author{名古屋大学経済学部経済学科2年 目黒瑛暉}
 %\date{}
 
@@ -54,7 +54,8 @@
 \item G.ストラング, 線形代数とその応用, 産業図書, 2009.
 \end{itemize}\par
 添字が付けられたものに対して$(x_i)$のように書くことがある。このように括弧で括って$i$または$j$の添字が付けられた場合は$i,j$が適当な区間を動くことを意味する。\\\par
-集合論の基礎的な知識を要する。線形代数の知識は必要としないが、あるとより楽しめるだろう。\\\par
+一読に当たり前提知識は要しない。無論、あるとより楽しめるだろう。\\
+丁寧な説明を心掛けた故、初学者でも十分楽しめる様式になっている。\sout{ただし、それ相応の根気は必要だ。}\\\par
 作成に当たってリアルモチ氏とよの氏による多大なる貢献があった。この場を借りて謝意を表する。\\\par
 本pdfの内容や体裁に不備があることが予測されるため、Github上にDiscussionを設けました。\\
 ご指摘などございましたらこちらへお願いします。{\scriptsize \url{https://github.com/EikiMeg/LinearArgebla/discussions}}
@@ -148,7 +149,7 @@ $n$次元ユークリッド空間の元、即ち$n$個実数を並べたもの�
 \end{enumerate}
 体$\mathbb{K}$上の左加群は$\mathbb{K}$上の\textbf{左線形空間}とも呼ばれる。厳密には「左」という言葉が付随するが、ひとまずこれを無視して単に\textbf{線形空間}と呼ぼう。線形空間の元を\textbf{ベクトル}と呼ぶ。\par
 現状、線形空間とは群と体を組み合わせた得体の知れないものである。しかし、以下の二つの命題により段々とその姿が見えてくる。これらは前節で登場した基底に関連する。\\
-\prop{2.2.1}任意の線形空間には基底が存在する。\\\par
+\prop{2.2.1}任意の線形空間には基底が存在する。{\scriptsize (この証明には集合論の知識を必要とするので、飛ばしても構わない)}\\\par
 $Proof.$　$V$を体$\mathbb{K}$上の任意の線形空間とする。\\\par
 $V=\{\bm{0}\}$のとき (これも線形空間であり、零空間と呼ぶ)\\
 当然$\bm{v}=\bm{0}$であるから、$\langle\bm{0}\rangle$は零空間の基底と言える。\\\par
@@ -280,12 +281,12 @@ $Proof.$　$A=(a_{ij})_{m \times n}$を行列とする。即ち$A:\mathbb{R}^n\t
 
 \subsection{行列の演算 - 行列の積}
 \motiv 行列は適切な演算規則を定めることにより線形空間即ち加群になることがわかった。しかしこれをより扱い易いものにするため、行列同士の積を定義して\textbf{環}の構造を入れたい。環にするだけならば例えば各成分同士で積をとる等雑多な定義があるが、せっかく我々は行列の線形写像という側面を知っているのだからこれを活かさないという手はないだろう。\par
-線形写像$\varphi:\mathbb{R}^q\to\mathbb{R}^p, \psi:\mathbb{R}^s\to\mathbb{R}^r$を考える。これらの表現行列を$A,B$とすれば
+線形写像$\phi:\mathbb{R}^q\to\mathbb{R}^p, \psi:\mathbb{R}^s\to\mathbb{R}^r$を考える。これらの表現行列を$A,B$とすれば
 \[A=(a_{ij})_{p \times q}, B=(b_{ij})_{r \times s}\]
-である。これらの合成写像を考える。即ち$\varphi\circ\psi:\mathbb{R}^s\to\mathbb{R}^p$である。これを考えるためには、まず$\psi$の終域と$\varphi$の始域が一致している必要があるから$q=r$を要請する。\par
+である。これらの合成写像を考える。即ち$\phi\circ\psi:\mathbb{R}^s\to\mathbb{R}^p$である。これを考えるためには、まず$\psi$の終域と$\phi$の始域が一致している必要があるから$q=r$を要請する。\par
 ここで行列の積が以下を満たせば都合がよい。ただし$\bm{x}\in\mathbb{R}^s$とする。
-\[\varphi\circ\psi(\bm{x})=AB\bm{x}\]
-即ち、行列の積を合成写像と考えるのである。$\varphi\circ\psi:\mathbb{R}^s\to\mathbb{R}^p$から、$AB$は$p \times s$行列になると考えられる。\\\par
+\[\phi\circ\psi(\bm{x})=AB\bm{x}\]
+即ち、行列の積を合成写像と考えるのである。$\phi\circ\psi:\mathbb{R}^s\to\mathbb{R}^p$から、$AB$は$p \times s$行列になると考えられる。\\\par
 \Build(表記上の問題から文字を置き換えた)\vspace{3pt}\par
 $A=(a_{ij})_{l \times m}, B=(b_{ij})_{m \times n}$とする。要請より、$A$の列数と$B$の行数が等しいとした。\\
 $\bm{x}=(x_1,x_2,\cdots,x_n)\in\mathbb{R}^n$とする。定義より$B\bm{x}=(\displaystyle\sum_{s=1}^nx_sb_{1s},\cdots,\displaystyle\sum_{s=1}^nx_sb_{ms})\in\mathbb{R}^m$である。\\
@@ -325,18 +326,18 @@ $B=\delta_{ij}=\begin{cases}1~(i=j) \\ 0~(i \neq j)\end{cases}$と定めると
 \[A=\sum_{i,j}a_{ij}I_{ij}\]
 と表せる。明らかに、組$\{ I_{11},I_{12},\cdots \}$は$M_{m,n}(\mathbb{R})$の基底であり
 \[\mathrm{dim}M_{m,n}(\mathbb{R})=mn\]
-が言える。(行列単位は$E$で書かれることもあるが、後述の概念と混同するので$I$とした。)\\\par
+が言える。\\\par
 \textbf{行列としての数ベクトル}\par
 $n$次元数ベクトル$\bm{x}=(x_1,x_2,\cdots,x_n)\in\mathbb{R}^n$は、一直線に数字が$n$個並んだ行列と同一視できる。即ち
 \[\begin{pmatrix}x_1&x_2&\cdots&x_n\end{pmatrix},\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}\]
 注意しなければならないのは、右(列ベクトル)と左(行ベクトル)で意味が大きく異なることである。なぜなら、右は$1 \times n$行列、左は$n \times 1$行列であり属する線形空間が異なるからである。行列の演算は行や列の数に制約が課されているものがあるため、これは確実に把握する必要がある。\par
 このような数ベクトルを行列の形で記述したものは、行列であるものの数ベクトルと同じくアルファベット太字で表す。\textbf{以後、ベクトルと言った場合にはこの意味の数ベクトルを指すものとする}。\par
-行列はベクトルを並べたものと考えられる。例えば、行列$A=(a_{ij})_{m \times n}$の第$j$列に当たるベクトル$(\bm{a}_j)$とすれば
+行列はベクトルを並べたものと考えられる。例えば、行列$A=(a_{ij})_{m \times n}$の第$j$列に当たる列ベクトルを$(\bm{a}_j)$とすれば
 \[A=\begin{pmatrix}\bm{a}_1&\bm{a}_2&\cdots&\bm{a}_n\end{pmatrix}\]
 と書ける。必要に応じてこの記法を用いる。\par
 数ベクトルと行列の積は、行列と列ベクトルの(行列としての)積と矛盾しない。\\\par
 \textbf{正方行列と単位行列}\par
-行列の内、$n \times n$行列を$\bm{n}$\textbf{次正方行列}と呼ぶ。明らかに、$n$次正方行列は同一の線形空間内での線形写像となる。また、$n$次正方行列の中で特に2.5節で登場した
+行列の内、$n \times n$行列を$\bm{n}$\textbf{次正方行列}と呼ぶ。$n$次正方行列の$(i,i)$成分を\textbf{対角成分}と呼ぶ。明らかに\\$n$次正方行列は同一の線形空間内での線形写像となる。また、$n$次正方行列の中で特に2.5節で登場した
 \[E=\begin{pmatrix}1&0&\cdots&0\\0&1&{}&0\\\vdots&{}&\ddots&\vdots\\0&0&\cdots&1\end{pmatrix}\]
 は$\bm{n}$\textbf{次単位行列}と呼ばれる。\textbf{単位行列は行列単位とは異なる概念であるから注意せよ}。$E$が$n$次正方行列であることを強調するために$E_n$と書くことがある。\par
 先述の事項から明らかな通り$E$は恒等写像$id:V \to V:\bm{x}\mapsto\bm{x}$の表現行列である。
@@ -344,7 +345,153 @@ $n$次元数ベクトル$\bm{x}=(x_1,x_2,\cdots,x_n)\in\mathbb{R}^n$は、一直
 %section終わり
 
 \section{連立方程式を解く}
+線形代数の基盤的事項を一通り定義し終わったので、3章からは応用的な内容に入っていく。線形代数学に於ける重要な概念を、連立一次方程式を解くという観点を失わず導入していく。
+\subsection{行基本変形の表現行列}
+この節では、連立方程式の解を求める過程が行列を用いてどのように表せるのかを探求する。\\\par
+\Motiv {\small 以下、連立方程式とは$n$個の式からなる$n$元連立一次方程式を指す。係数行列は$n$次正方行列になる。}\vspace{3pt}\par
+連立方程式
+\[A\bm{x}=\bm{y}~~~\mathrm{i.e.}~~\begin{pmatrix}a_{11}&a_{12}&\cdots&a_{1n}\\a_{21}&a_{22}&{}&a_{2n}\\\vdots&{}&\ddots&\vdots\\a_{n1}&a_{n2}&\cdots&a_{nn}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}=\begin{pmatrix}y_1\\y_2\\\vdots\\y_n\end{pmatrix}\]
+の解は
+\[\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}=\begin{pmatrix}r_1\\r_2\\\vdots\\r_n\end{pmatrix}\]
+であるが、これを少し見方を変えて
+\[\begin{pmatrix}1&0&\cdots&0\\0&1&{}&0\\\vdots&{}&\ddots&\vdots\\0&0&\cdots&1\end{pmatrix}\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}=\begin{pmatrix}r_1\\r_2\\\vdots\\r_n\end{pmatrix}\]
+と見ることは可能だろう。即ち、我々は連立方程式を解くために、何かしらの操作
+\[\varphi:M_{n,\ast}(\mathbb{R}) \to M_{n,\ast}(\mathbb{R}):A \mapsto E_n\]
+を施しているのだ。そして、解とは
+\[\bm{r}=\varphi(\bm{y})\]
+に過ぎない。そこで、差し当たり$\varphi$を求めることを目標としよう。\par
+ここで述べていることは突飛に見えるかもしれないが、この漠然としたものを具現化するにあたり結局の所、初等教育で学ぶ\textbf{Gaussの消去法}を用いる。次第に角が取れて馴染みやすくなってくるので強張る必要はない。\par
+我々が連立方程式を解くときに何をしているのかを、行列を用いて再確認してみよう。例として
+\[\begin{cases}a_{11}x_1+a_{12}x_2+a_{13}x_3=y_1~\cdots\textcircled{\scriptsize 1}\\a_{21}x_1+a_{22}x_2+a_{23}x_3=y_2~\cdots\textcircled{\scriptsize 2}\\a_{31}x_1+a_{32}x_2+a_{33}x_3=y_3~\cdots\textcircled{\scriptsize 3}\end{cases}\]
+を考える。まず、$\textcircled{\scriptsize 1}$の式を定数倍して$\textcircled{\scriptsize 2},\textcircled{\scriptsize 3}$に加える。こうすることで$x_1$の係数を$0$にする:
+\[\begin{cases}a_{11}x_1+a_{12}x_2+a_{13}x_3=y_1~\cdots\textcircled{\scriptsize 1}\\\hspace{3.7em}a'_{22}x_2+a'_{23}x_3=y'_2~\cdots\textcircled{\scriptsize 2'}\\\hspace{3.7em}a'_{32}x_2+a'_{33}x_3=y'_3~\cdots\textcircled{\scriptsize 3'}\end{cases}\]
+同様にして、$\textcircled{\scriptsize 2'}$の定数倍を$\textcircled{\scriptsize 3'}$に加えて
+\[\begin{cases}a_{11}x_1+a_{12}x_2+a_{13}x_3=y_1~\cdots\textcircled{\scriptsize 1}\\\hspace{3.7em}a'_{22}x_2+a'_{23}x_3=y'_2~\cdots\textcircled{\scriptsize 2'}\\\hspace{7.4em}a''_{33}x_3=y''_3~\cdots\textcircled{\scriptsize 3''}\end{cases}\]
+$\textcircled{\scriptsize 3''}$から$x_3$がわかり、それを$\textcircled{\scriptsize 2'}$に代入して$x_2$を、それらを$\textcircled{\scriptsize 1}$に代入して$x_1$を求めることができる。\par
+これを係数行列とベクトルの形に表せば
+\[\begin{pmatrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}=\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix}\to\begin{pmatrix}a_{11}&a_{12}&a_{13}\\0&a'_{22}&a'_{23}\\0&a'_{32}&a'_{33}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}=\begin{pmatrix}y_1\\y'_2\\y'_3\end{pmatrix}\to\begin{pmatrix}a_{11}&a_{12}&a_{13}\\0&a'_{22}&a'_{23}\\0&0&a''_{33}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}=\begin{pmatrix}y_1\\y'_2\\y''_3\end{pmatrix}\]
+厳密には、さらに続いて
+\[\to\begin{pmatrix}a_{11}&a_{12}&a_{13}\\0&a'_{22}&0\\0&0&a''_{33}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}=\begin{pmatrix}y_1\\y''_2\\y''_3\end{pmatrix}\to\begin{pmatrix}a_{11}&0&0\\0&a'_{22}&0\\0&0&a''_{33}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}=\begin{pmatrix}y'_1\\y''_2\\y''_3\end{pmatrix}\to\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}=\begin{pmatrix}r_1\\r_2\\r_3\end{pmatrix}\]
+ここで行われていることは、係数行列に右辺のベクトルを付け加えた
+\[(A|\bm{y})=\begin{pmatrix}a_{11}&a_{12}&a_{13}&y_1\\a_{21}&a_{22}&a_{23}&y_2\\a_{31}&a_{32}&a_{33}&y_3\end{pmatrix}\]
+に対し、行を定数倍したりそれを他の行に加えたりしている。このような操作を\textbf{行基本変形}、また$(A|\bm{y})$を\\\textbf{拡大係数行列}という。\par
+さて、初めの話に戻る。どうやら我々が知りたがっている$\varphi$なるものは上記のような行基本変形を複数組み合わせたものとして見ることができそうだ。\\\par
+\build 拡大係数行列に対して行う行基本変形とは
+\begin{itemize}
+\item いずれかの行を定数倍する
+\item いずれかの行の定数倍を他の行に加える
+\item いずれかの行を他の行と入れ替える
+\end{itemize}
+という操作のことである。この操作について以下が言える。\\\par
+\prop{3.1.1}行基本変形は線形写像である。\\\par
+$Proof.$　$(\bm{a}_i),(\bm{b}_i)$を$n$次元行ベクトルとする。行列$A,B$を
+\[A=\begin{pmatrix}\bm{a}_1\\\bm{a}_2\\\vdots\\\bm{a}_n\end{pmatrix},B=\begin{pmatrix}\bm{b}_1\\\bm{b}_2\\\vdots\\\bm{b}_n\end{pmatrix}\]
+のようにし、また写像$\phi,\psi,\omega$を\newpage
+\begin{center}
+$\phi:M_{n,\ast}(\mathbb{R}) \to M_{n,\ast}(\mathbb{R}):$第$i$行を$c$倍する\\
+$\psi:M_{n,\ast}(\mathbb{R}) \to M_{n,\ast}(\mathbb{R}):$第$i$行を第$j$行に加える\\
+$\chi:M_{n,\ast}(\mathbb{R}) \to M_{n,\ast}(\mathbb{R}):$第$i$行と第$j$行を入れ替える
+\end{center}
+と定める(ただし$c\in\mathbb{R}$)。以下、$s,t\in\mathbb{R}$として$\phi,\psi,\omega$の線形性を示す。\\\par
+(i)いずれかの行を定数倍する\par
+これは写像$\phi$そのものだから、$\phi$の線形性を示す。
+\[\phi(sA+tB)=\phi(\begin{pmatrix}s\bm{a}_1+t\bm{b}_1\\\vdots\\s\bm{a}_i+t\bm{b}_i\\\vdots\\s\bm{a}_n+t\bm{b}_n\end{pmatrix})=\begin{pmatrix}s\bm{a}_1+t\bm{b}_1\\\vdots\\sc\bm{a}_i+tc\bm{b}_i\\\vdots\\s\bm{a}_n+t\bm{b}_n\end{pmatrix}=s\begin{pmatrix}\bm{a}_1\\\vdots\\c\bm{a}_n\\\vdots\\\bm{a}_n\end{pmatrix}+t\begin{pmatrix}\bm{b}_1\\\vdots\\c\bm{b}_n\\\vdots\\\bm{b}_n\end{pmatrix}=s\phi(A)+t\phi(B)\]
+これで示せた。\\\par
+(ii)いずれかの行の定数倍を他の行に加える\par
+この操作を再現するには工夫が必要で
+\begin{center}
+第$j$行を$\displaystyle\frac{1}{c}$倍$\to$第$i$行を第$j$行に加える$\to$第$j$行を$c$倍
+\end{center}
+とすればよい。即ち合成写像
+\[\phi_2\circ\psi\circ\phi_1\]
+である。$\phi$の線形性は示せているから、$\psi$のそれを示せばよい。
+\[\psi(sA+tB)=\psi(\begin{pmatrix}\vdots\\s\bm{a}_i+t\bm{b}_i\\\vdots\\s\bm{a}_j+t\bm{b}_j\\\vdots\end{pmatrix})=\begin{pmatrix}\vdots\\s\bm{a}_i+t\bm{b}_i\\\vdots\\s(\bm{a}_i+\bm{a}_j)+t(\bm{b}_i+\bm{b}_j)\\\vdots\end{pmatrix}=s\begin{pmatrix}\vdots\\\bm{a}_i\\\vdots\\\bm{a}_i+\bm{a}_j\\\vdots\end{pmatrix}+t\begin{pmatrix}\vdots\\\bm{b}_i\\\vdots\\\bm{b}_i+\bm{b}_j\\\vdots\end{pmatrix}=s\psi(A)+t\psi(B)\]
+これで示せた。\\\par
+(iii)いずれかの行を他の行と入れ替える\par
+これは写像$\chi$そのものだから、$\chi$の線形性を示す。
+\[\chi(sA+tB)=\chi(\begin{pmatrix}\vdots\\s\bm{a}_i+t\bm{b}_i\\\vdots\\s\bm{a}_j+t\bm{b}_j\\\vdots\end{pmatrix})=\chi\begin{pmatrix}\vdots\\s\bm{a}_j+t\bm{b}_j\\\vdots\\s\bm{a}_i+t\bm{b}_i\\\vdots\end{pmatrix}=s\begin{pmatrix}\vdots\\\bm{a}_j\\\vdots\\\bm{a}_i\\\vdots\end{pmatrix}+t\begin{pmatrix}\vdots\\\bm{b}_j\\\vdots\\\bm{b}_i\\\vdots\end{pmatrix}=s\chi(A)+t\chi(B)\]
+これで示せた。\par
+以上より、行基本変形は全て線形写像であることが示された。\qed\newpage
+行基本変形が線形写像であるということは、命題2.4.3より、これには表現行列が存在する。先の写像$\varphi$は行基本変形を複数組み合わせたものだから、これも線形写像であり、表現行列$T$が存在する。\par
+では、その大きさはどうであろうか。行基本変形は先述の通り$M_{n,\ast}(\mathbb{R}) \to M_{n,\ast}(\mathbb{R})$なる写像であるから、行列として考えるならば
+\begin{itemize}
+\item 始域と終域が一致する
+\item 任意の$n \times \ast$行列との積を取れる
+\end{itemize}
+ということから、$T$は左から掛ける$n$次正方行列、即ち
+\[\varphi(A)=TA\]
+と言ってよいだろう。ここで、一つ一つの行基本変形に注目する。これを$(\varphi_i)$、その表現行列を$(T_i)$と表せば
+\[\varphi=\varphi_k\circ\varphi_{k-1}\circ\cdots\circ\varphi_1~\therefore~T=T_kT_{k-1} \cdots T_1\]
+ということになる。積の順番に注意せよ。次に我々がすべきことはそれぞれの行基本変形の表現行列$(T_i)$を具体的に求めることである。少々テクニカルな方法で求めていこう。\\\par
+(i)いずれかの行を定数倍する写像$\phi:$
+\[\phi(A)=T_\phi A\]
+ここで、行列$A$は任意だから、単位行列$E_n$を代入すれば
+\[\phi(E_n)=T_\phi E_n=T_\phi\]
+写像$\phi$は第$i$行を$c$倍する写像だから結局
+\[T_\phi=\begin{pmatrix}1&\cdots&0&\cdots&0\\\vdots&\ddots&{}&{}&\vdots\\0&{}&c&{}&0\\\vdots&{}&{}&\ddots&\vdots\\0&\cdots&0&\cdots&1\end{pmatrix}\]
+即ち、$T_\phi$は$n$次単位行列$E_n$の$(i,i)$成分を$c$にしたものである。逆に、このようなものが任意の$n \times \ast$行列の特定の行を$c$倍することを示そう。\par
+$T_\phi$は$E_n$の$(k,k)$成分を$c$にした$n$次正方行列であるとする。行列$A$を
+\[A=\begin{pmatrix}a_{11}&a_{12}&\cdots&a_{1n}\\a_{21}&a_{22}&{}&a_{2n}\\\vdots&{}&\ddots&\vdots\\a_{m1}&a_{m2}&\cdots&a_{mn}\end{pmatrix} \in M_{m,n}(\mathbb{R})\]
+とすると
+\[(T_\phi A)_{ij}=\sum_lt_{il}a_{lj}=\begin{cases}\delta_{il}a_{lj}~(i \neq k)\\c\delta_{il}a_{lj}~(i=k)\end{cases}=\begin{cases}a_{ij}~(i \neq k)\\ca_{ij}~(i=k)\end{cases}\]
+確かに、これは$A$の第$k$行を$c$倍している。\newpage
+(ii)いずれかの行の定数倍を他の行に加える写像$\psi:$
+\[\psi(A)=T_\psi A\]
+$\psi$は第$s$行を$c$倍して第$t$行に加える写像であり、以下のように分解できる
+\[\psi=\phi_2\circ\psi'\circ\phi_1\]
+ただし、$\phi_1$は第$t$行を$\displaystyle\frac{1}{c}$倍する写像、$\phi_2$は第$t$行を$c$倍する写像、$\psi'$は第$s$行を第$t$行に加える写像である。\\
+それぞれの表現行列を$T_{\phi_1},T_{\psi'},T_{\phi_2}$とすれば、$T_{\phi_1}$と$T_{\phi_2}$は既知だから$T_{\psi'}$が解れば
+\[T_\psi=T_{\phi_2}T_{\psi'}T_{\phi_1}\]
+という積によって$T_\psi$を求めることができる。よって$T_{\psi'}$について調べていく。
+\[\psi'(A)=T_{\psi'}A\]
+に、$A$として$E_n$を代入することで
+\[T_{\psi'}=\begin{pmatrix}1&\cdots&0&\cdots&0\\\vdots&\ddots&{}&{}&\vdots\\0&{}&1&{}&0\\\vdots&\cdots 1 \cdots&{}&\ddots&\vdots\\0&\cdots&0&\cdots&1\end{pmatrix}=E_n+I_{ts}\]
+逆に、$A$を(i)と同様にすれば
+\[T_{\psi'}A=(E_n+I_{ts})A=A+I_{ts}A \eqno(\ast)\]
+二つ目の等式で環の積に関する分配法則を用いた。行列単位$I_{ts}=(\iota_{ij})_{n \times n}$について考えよう。
+\[(\iota_{ij})=\begin{cases}1~(i=t \land j=s)\\0~(\mathrm{otherwise})\end{cases}\]
+であるから
+\[(I_{ts}A)_{ij}=\sum_k\iota_{ik}a_{kj}=\begin{cases}a_{is}~(i=t)\\0~(\mathrm{otherwise})\end{cases}\]
+即ち、$I_{ts}$は$A$の第$s$行のみを取り出し、第$t$行とするような変形を行う:
+\[I_{ts}A=I_{ts}\begin{pmatrix}\vdots\\\bm{a}_s\\\vdots\\\bm{a}_t\\\vdots\end{pmatrix}=\begin{pmatrix}\vdots\\\bm{0}\\\vdots\\\bm{a}_s\\\vdots\end{pmatrix}\]
+右辺で、第$t$行以外の全ての成分は$0$である。これを踏まえて$(\ast)$式に立ち返れば、$T_{\psi'}$は確かに$A$の第$s$行を第$t$行に加えていることが確かめられる。\par
+さて役者は出揃ったので、いよいよ$T_\psi$を求めていく。積をとって分配法則を用いれば
+\[T_\psi=T_{\phi_2}T_{\psi'}T_{\phi_1}=T_\psi=T_{\phi_2}(E_n+I_{ts})T_{\phi_1}=(T_{\phi_2}+T_{\phi_2}I_{ts})T_{\phi_1}\]\newpage
+$T_{\phi_2}$は第$t$行を$c$倍するが、$I_{ts}$は$(t,s)$成分のみ$1$で他は$0$であるから
+\[T_{\phi_2}I_{ts}=cI_{ts}\]
+\[\therefore~(T_{\phi_2}+T_{\phi_2}I_{ts})T_{\phi_1}=T_{\phi_1}T_{\phi_2}+cI_{ts}T_{\phi_1}\]
+定義から明らかに$T_{\phi_1}T_{\phi_2}=E_n$である。$T_{\phi_1}$の第$s$行は$\delta_{sj}$だから、$cI_{ts}T_{\phi_1}=cI_{ts}$がわかる。結論として
+\[T_{\psi}=E_n+cI_{ts}\]
+が言える。これは$E_n$の$(t,s)$成分の$0$を$c$にしたものである。\\\par
+(iii)いずれかの行を他の行と入れ替える写像$\chi:$
+\[\chi(A)=T_\chi A\]
+写像$\chi$は第$s$行と第$t$行を入れ替える写像であり、$A$として$E_n$を代入すると
+\[T_\chi=\begin{pmatrix}1&{}&{}&\cdots&{}&{}&0\\{}&\ddots&{}&{}&{}&{}&{}\\{}&{}&0&{}&1&{}&{}\\\vdots&{}&{}&\ddots&{}&{}&\vdots\\{}&{}&1&{}&0&{}&{}\\{}&{}&{}&{}&{}&\ddots&{}\\0&{}&{}&\cdots&{}&{}&1\end{pmatrix}=E_n-(I_{ss}+I_{tt})+(I_{st}+I_{ts})\]
+煩雑だが、要するに単位行列の第$s$行と第$t$行を入れ替えたものである。式で表すなら上式右辺のようになる。\\
+逆に
+\[T_{\chi}A=\{E_n-(I_{ss}+I_{tt})+(I_{st}+I_{ts})\}A=A-I_{ss}A+I_{st}A-I_{tt}A+I_{ts}A\]
+ここで、$I_{ij}$は第$j$行のみを取り出し第$i$行とする操作を行うことを思い出せば
+\[A-I_{ss}A+I_{st}A\]
+の部分は$A$の第$s$行を第$t$行に取り換える操作に他ならない。同様に
+\[-I_{tt}A+I_{ts}A\]
+の部分は$A$の第$t$行を第$s$行に取り換える。結果、第$s$行と第$t$行が入れ替わる。\\\par
+以上で全ての行基本変形の表現行列を求めることが出来た。これらの積を取ることで
+\[\varphi:M_{n,\ast}(\mathbb{R}) \to M_{n,\ast}(\mathbb{R}):A \mapsto E_n\]
+を求めることができる。核心に迫る前に一つ注意点を述べる。\newpage
+%subsection終わり
 
-\subsection{行基本変形とLU分解}
-作成中
+\paragraph{注意3.1}\par~\par
+行基本変形の内、行の入れ替えは他の二つと異なる性質を持ち、扱いも特別である。なぜそうなのかを説明する。そもそも、我々が連立方程式を解く際に行の入れ替えを必要とすることは少ない。これは経験と合致するだろう。行を入れ替えなければならないのは
+\[\begin{pmatrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}=\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix}\to\begin{pmatrix}a_{11}&a_{12}&a_{13}\\0&a'_{22}&a'_{23}\\0&a'_{32}&a'_{33}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}=\begin{pmatrix}y_1\\y'_2\\y'_3\end{pmatrix}\]
+のような変形の際に、$a_{11}$の部分が$0$であることである。本来であれば第$1$行の$-\displaystyle\frac{a_{21}}{a_{11}}$倍及び$-\displaystyle\frac{a_{31}}{a_{11}}$倍を下にある行に加えることで$a_{21},a_{31}$を$0$にするのだが、これは$a_{11}=0$の場合は不可能である。だから、行を入れ替える必要がある。勿論こ同様の問題は$a'_{22}=0$の場合にも起こる。($a'_{32}$を消せない)\par
+逆にこの問題が起きないような行の配列ならば、上にある行を定数倍して下の行に加え、必要に応じて行を定数倍するだけで解を求めることができる。当然、解は行の入れ替えの前後で不変だから求根の手順は
+\begin{itemize}
+\item 適切に行を入れ替える\\
+\hspace{5em}$\downarrow$
+\item 行の足し引き、定数倍
+\end{itemize}
+ということになる。以降、連立方程式$A\bm{x}=\bm{y}$の係数行列$A$は適宜$T_\chi$を作用させて上述の問題が起こらないよう適切に行を入れ替えたものであるとする。この要請はこの後の$LU$分解に大いに活きる。
+%paragraph終わり
+
+%section終わり
 \end{document}
