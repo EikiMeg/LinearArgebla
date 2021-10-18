@@ -1,0 +1,350 @@
+\documentclass[dvipdfmx]{jsarticle}
+
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx,hidelinks]{hyperref}
+\usepackage{pxjahyper}
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{ascmac}
+\usepackage{bm}
+\usepackage{ulem}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+\usepackage{LAsym}
+
+% 自前の「LAsym.sty」について
+% 「motivation」「build」のマークを出力する。
+% \build, \motiv で使うことができる
+% \defi{番号} で「定義」を出す。
+% \prop{番号} で「命題」を出す。
+% \set{元}{条件}で集合の内包的記法を出す。
+
+\graphicspath{{./fig/}}
+
+\title{線形代数\.{非}入門}
+\author{名古屋大学経済学部経済学科2年 目黒瑛暉}
+%\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{前書き}
+
+\subsection{はじめに}
+線形代数は大学数学の基礎的な分野である。その構築は大概、連立一次方程式を解くという観点で行われる。これはイメージが容易である一方で、数学的な厳密さがあまり見えてこない。そこで、このpdfは連立方程式への応用を念頭に線形代数を(ある程度)厳密に作り上げる。線形代数を楽しく概観できるようなものになれば幸いである。
+%subsection終わり
+
+\subsection{諸注意}
+このpdfは「やりたいこと(motivation)」を示し、それに合致した概念を「構築(build)」するという方式で進んでいく。これらを区別できるよう以下のマークを付ける。
+\\
+\motiv このマークはやりたいことを意味する。\\
+\build このマークは構築を意味する。{\scriptsize 総じて長い}\\~\\
+これらのマークは各節の冒頭或いは途中で適宜用いる。\\\par
+以下を参考文献とした。
+\begin{itemize}
+\item 佐武一郎, 線形代数学(新装版), 数学選書, 裳華房, 2017.
+\item N.ブルバキ, 代数 2, 数学原論, 東京図書, 1970.
+\item G.ストラング, 線形代数とその応用, 産業図書, 2009.
+\end{itemize}\par
+添字が付けられたものに対して$(x_i)$のように書くことがある。このように括弧で括って$i$または$j$の添字が付けられた場合は$i,j$が適当な区間を動くことを意味する。\\\par
+集合論の基礎的な知識を要する。線形代数の知識は必要としないが、あるとより楽しめるだろう。\\\par
+作成に当たってリアルモチ氏とよの氏による多大なる貢献があった。この場を借りて謝意を表する。\\\par
+本pdfの内容や体裁に不備があることが予測されるため、Github上にDiscussionを設けました。\\
+ご指摘などございましたらこちらへお願いします。{\scriptsize \url{https://github.com/EikiMeg/LinearArgebla/discussions}}
+\newpage
+%subsection終わり
+%section終わり
+
+\section{行列}
+
+\subsection{線形代数に先立って}
+線形代数では行列というものが登場する。これはいくつかの数を含んだものであり、かつ一つの数学的対象となる。しかしながらこれはいきなり考えてすぐ腑に落ちるというものでもないから、これに似た概念でより単純な数ベクトルというものをここで扱う。最も単純な説明としては、この節で行うことは高校数学Bで登場するベクトルの一般化である。\\\par
+\motiv $n$元連立方程式
+\[\begin{cases}f_1(x_1,x_2,\cdots,x_n)=y_1\\f_2(x_1,x_2,\cdots,x_n)=y_2\\\hspace{17mm}\vdots\\f_n(x_1,x_2,\cdots,x_n)=y_n\end{cases}\]
+の解は、
+\[x_1=r_1,~x_2=r_2,\cdots,x_n=r_n\]
+のように書き表すことができる。しかしこの書き方は少し不格好である。この解は一群の方程式から求められたものであり、これらが$n$個バラバラに扱われるのは勝手が悪い。従って我々がこの$n$個の解(ここでは実数としておくが、複素数でも同様の議論が可能)を一つの数学的対象として扱うことを考えるのは自然だろう。\par
+このようにいくつかの数をまとめたものを考えれば、上の方程式群及び解は
+\[\begin{pmatrix}f_1(x_1,x_2,\cdots,x_n)\\f_2(x_1,x_2,\cdots,x_n)\\\vdots\\f_n(x_1,x_2,\cdots,x_n)\end{pmatrix}=\begin{pmatrix}y_1\\y_2\\\vdots\\y_n\end{pmatrix},~\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}=\begin{pmatrix}r_1\\r_2\\\vdots\\r_n\end{pmatrix}\]
+のように表せる。これはとても見栄えが良い。\\
+\build 二つの集合$A,B$に対し、以下のような直積$A \times B$を考えられる。
+\[A \times B := \set{(a,b)}{a \in A, b \in B}\]
+直積の元は、$A$と$B$それぞれの元を一つずつ指定することで定まる。当然、3つ以上の集合の直積も考えられ
+\[A \times B \times C \times \cdots := \set{(a,b,c,\cdots)}{a \in A, b \in B, c \in C, \cdots}\]
+のように、それぞれの集合の元の組になる。\par
+次に実数$\mathbb{R}$同士の直積を考える。$\mathbb{R}$という同一の集合の直積であるから、数の累乗に倣って
+\[\mathbb{R}^2:=\mathbb{R} \times \mathbb{R}\]
+のように記述する。$n$個の$\mathbb{R}$の直積
+\[\mathbb{R}^n = \set{(x_1,x_2,\cdots,x_n)}{(x_i) \in \mathbb{R}}\]
+を$\bm{n}$\textbf{次元ユークリッド空間}、または$n$次元数空間と呼ぶ。これは$n$個の実数の組の集合である。\\
+$n$次元ユークリッド空間の元、即ち$n$個実数を並べたものを$\bm{n}$\textbf{次元数ベクトル}と言う。\\
+ベクトルは複数の数を同時に含むが、これ自体は単一の数学的対象であり、一文字で表される。多くの場合、以下のようにアルファベットの太字で記述される。
+\[\bm{x}=(x_1,x_2,\cdots,x_n)\]\par
+さて、$n$次元ユークリッド空間$\mathbb{R}^n$について、その任意の元$\bm{x}=(x_i),\bm{y}=(y_i)$と実数$c\in\mathbb{R}$に関して以下を定義する。
+\[\bm{x}+\bm{y}:=(x_i+y_i),~c\bm{x}:=(c\cdot\bm{x}_i)\]
+前者を和、後者をスカラー倍と言う。この定義により、以下が導ける。証明は容易い。
+\begin{enumerate}
+\item $\bm{x}+\bm{y}=\bm{y}+\bm{x}$
+\item $(\bm{x}+\bm{y})+\bm{z}=\bm{x}+(\bm{y}+\bm{z})$
+\item $\exists\bm{0}\in\mathbb{R}^n,\forall\bm{x},\bm{x}+\bm{0}=\bm{0}+\bm{x}=\bm{0}~~~(\bm{0}=(0,0,\cdots))$
+\item $\forall\bm{x},\exists\bm{y},\bm{x}+\bm{y}=\bm{y}+\bm{x}=\bm{z}$
+\item $c(d\bm{x})=(cd)\bm{x}$
+\item $(c+d)\bm{x}=c\bm{x}+d\bm{x}$
+\item $c(\bm{x}+\bm{y})=c\bm{x}+c\bm{y}$
+\item $1\bm{x}=\bm{x}$及び$0\bm{x}=\bm{0}$
+\end{enumerate}
+上によれば、$\mathbb{R}^n$は和と実数倍について閉じているから
+\[c\bm{x}+d\bm{y}\]
+のようなものも$\mathbb{R}^n$となる。これを一般化したもの
+\[\sum_ic_i\bm{x}_i~((c_i)\in\mathbb{R},(\bm{x}_i)\in\mathbb{R}^n)\]
+を\textbf{線形結合}と呼ぶ。ここで、線形結合が$\bm{0}$になるという線形関係
+\[\sum_ic_i\bm{x}_i=\bm{0}\]
+が、$(c_i)=0$のときのみ成立するとき、数ベクトルの組$(\bm{x}_i)$は\textbf{一次独立}であるという。一次独立でないことを\textbf{一次従属}であるといい、この場合ある数ベクトルが他の線形結合で表される。\par
+一次独立な数ベクトルの組の内、それらの線形結合で$\mathbb{R}^n$の全ての元が表せるようなものを$\mathbb{R}^n$の\textbf{基底}という。この時、基底は$\mathbb{R}^n$の生成系、または$\mathbb{R}^n$を\textbf{生成する}という。
+例えば全ての$n$次元数ベクトルは$n$個の基本ベクトル$(e_i)$の線形結合で表されるから、$(e_i)$は$\mathbb{R}^n$の基底となる。これを標準基底という。基底は特別に$\langle e_1,e_2,\cdots,e_n \rangle$のように書かれることもある。\par
+基底の線形結合として数ベクトルを表した時の係数の部分を\textbf{成分}と呼ぶ。基底を一つ固定すれば、任意の数ベクトルの成分は一意に定まる。我々が「座標」と呼ぶものは標準基底に関する成分である。\\\par
+ここで述べた事項がベクトルの自然な拡張であること、また冒頭に述べたモチベに応えるものになっていることを確認して欲しい。このようにしてやりたいことが定式化されていくのを感じられると楽しめるだろう。
+%subsection終わり
+
+\subsection{線形空間}
+行列の導入に向けて、ユークリッド空間をさらに拡張した概念である線形空間を定義し、その性質に迫る。代数学の基礎的な部分から始める。\\\par
+\motiv $n$次元ユークリッド空間$\mathbb{R}^n$について、その任意の元の線形結合はまた$\mathbb{R}^n$の元であるのだった。\\
+幾何学的直観に頼ればこれは直線や平面といった\textbf{扱いやすいもの}が持つ性質である。同様の性質を持った概念の探求を、より抽象的に代数学という観点から行う。\\
+\build 数学では、集合に演算が定義されたもの考える。空でない集合Rと二項演算$\ast:R \times R \to R$の組$(R,\ast)$で、以下を満たすものを\textbf{アーベル群}と呼ぶ。
+\begin{enumerate}
+\item $\forall a,b,c \in R, (a \ast b) \ast c = a \ast (b \ast c)$
+\item $\exists e \in R, \forall a \in R, a \ast e = e \ast a = a$
+\item $\forall a \in R, \exists b \in R, a \ast b = b \ast a = e$
+\item $\forall a,b \in R, a \ast b = b \ast a$
+\end{enumerate}
+二項演算$\ast$が和$+$であるとき、これを\textbf{加法群}と呼ぶ。$e$は単位元と呼ばれるものである。\par
+加法群に更に条件を課したものを考える。空でない集合Rと和$+$、積$\cdot$の組$(R,+,\cdot)$で、以下を満たすものを\textbf{環}と呼ぶ。ただし$+,\cdot$はいずれも$R \times R \to R$である。
+\begin{enumerate}
+\setcounter{enumi}{4}
+\item $\forall a,b,c \in R, (a \cdot b) \cdot c = a \cdot (b \cdot c)$
+\item $\exists u \in R, \forall a \in R, u \cdot a = a \cdot u = a$
+\item $\forall a,b,c \in R, a \cdot (b + c) = (a \cdot b) + (b \cdot c),~(a + b) \cdot c = (a \cdot c) + (b \cdot c)$
+\end{enumerate}\par
+以上に加えて以下を満たす$(R,+,\cdot)$は\textbf{体}と呼ばれる。
+\begin{enumerate}
+\setcounter{enumi}{7}
+\item $\forall a,b \in R,a \cdot b = b \cdot a$
+\item $\forall a \in R \backslash \{0\}, \exists a^{-1} \in R, a \cdot a^{-1} = a^{-1} \cdot a = 1$
+\end{enumerate}
+体の最も簡単な例は実数体$(\mathbb{R},+,\cdot)$である。体の具体的イメージが湧かない場合は常に実数体$\mathbb{R}$または複素数体$\mathbb{C}$を考えて問題ない。\par
+さて我々はこれまで同一の集合内の二項演算を考えて来たが、ここで異なる集合、特に加法群$(E,+)$と体$(\mathbb{K},+,\cdot)$の元の間の演算を考える。$\bm{x},\bm{y} \in E,~a,b \in \mathbb{K}$として、演算$\top:\mathbb{K} \times E \to E$が与えられていて、以下を満たす加法群$E$を、体$\mathbb{K}$上の左加群と言う。
+\begin{enumerate}
+\item $a \top (\bm{x} + \bm{y}) = (a \top \bm{x})+(a \top \bm{y})$
+\item $(a+b) \top \bm{x} = (a \top \bm{x})+(b \top \bm{x})$
+\item $a \top (b \top \bm{x}) = (ab) \top \bm{x}$
+\item $1 \top \bm{x} = \bm{x}$
+\end{enumerate}
+体$\mathbb{K}$上の左加群は$\mathbb{K}$上の\textbf{左線形空間}とも呼ばれる。厳密には「左」という言葉が付随するが、ひとまずこれを無視して単に\textbf{線形空間}と呼ぼう。線形空間の元を\textbf{ベクトル}と呼ぶ。\par
+現状、線形空間とは群と体を組み合わせた得体の知れないものである。しかし、以下の二つの命題により段々とその姿が見えてくる。これらは前節で登場した基底に関連する。\\
+\prop{2.2.1}任意の線形空間には基底が存在する。\\\par
+$Proof.$　$V$を体$\mathbb{K}$上の任意の線形空間とする。\\\par
+$V=\{\bm{0}\}$のとき (これも線形空間であり、零空間と呼ぶ)\\
+当然$\bm{v}=\bm{0}$であるから、$\langle\bm{0}\rangle$は零空間の基底と言える。\\\par
+$V\neq\{\bm{0}\}$のとき\\
+以下のような$V$の部分集合$X$を考える。
+\begin{itemize}
+\item $X$は有限個の$V$の元からなる。即ち$X=\set{(\bm{v}_1,\bm{v}_2,\cdots,\bm{v}_n)}{(\bm{v}_i) \in V}$
+\item $\forall(\bm{v}_i) \in X$は一次独立である。
+\end{itemize}
+さらに、これを満たす$X$を全て含んだ集合族$\mathscr{X}$を用意する。この$\mathscr{X}$は空集合ではない。なぜなら
+\[V\neq\bm{0}\Rightarrow\exists v \in V\backslash\{\bm{0}\}\]
+であり、$\{\bm{v}\}\in\mathscr{X}$となるからである。\par
+次に、集合族が包含関係により順序集合になることを用いる。
+\[S=\set{\bigcup X~}{X\in\mathscr{X}}\]
+とすると、明らかに$S\in\mathscr{X}$であり、また$S'$を$\mathscr{X}$の任意の全順序部分集合とすると$S' \subset S$となるから、Sは$\mathscr{X}$の任意の全順序部分集合の上界である。よって、Zornの補題より、$\mathscr{X}$は極大元$M$を持つ。\\
+(ここで、極大元$M$が一意に定まらないことに注意せよ。全順序部分集合としてどんなものを取るかによって極大元$M$が異なるものになると考えられる。)\par
+$M=\{\bm{b}_1,\bm{b}_2,\cdots,\bm{b}_n\}$とする。ある$\bm{v} \in V$が存在して$(\bm{b}_i)$の線形結合で表せないと仮定する。\\
+線形関係$\mu\bm{v}+\displaystyle\sum_{i=1}^n\lambda_i\bm{b}_i=\bm{0}~(\mu,(\lambda_i)\in\mathbb{K})$について、$\mu\neq0$と仮定すると、
+\[\bm{v}=-\frac{1}{\mu}\sum_{i=1}^n\lambda_i\bm{b}_i=\sum_{i=1}^n-\frac{\lambda_i}{\mu}\bm{b}_i\]
+から$\bm{v}$が$(\bm{b}_i)$の線形結合で表せないことに矛盾する。従って$\mu=0$であり、したがって関係$\displaystyle\sum_{i=1}^n\lambda_i\bm{b}_i=\bm{0}$が得られるが、$M$の定義より明らかに$(\lambda_i)=0$である。\par
+以上より$\mu=(\lambda_i)=0$だから、$\{\bm{v},(\bm{b}_i)\}$は一次独立である。よって$M \subset M \cup \{\bm{v}\} \in \mathscr{X}$となるが、これは$M$が$\mathscr{X}$の極大元であることに矛盾する。以上より、$M$は$V$の生成系であり、任意の線形空間$V$は基底$\langle\bm{b}_1,\bm{b}_2,\cdots,\bm{b}_n\rangle$を持つ。$\qed$\\\par
+証明の途中で仄めかしたように、一つの線形空間の基底は一意には定まらない。しかし、次が言える\newpage
+\prop{2.2.2}基底の個数は一意的である。\\\par
+$Proof.$　$V$を線形空間とし、$\{\bm{a}_1,\bm{a}_2,\cdots,\bm{a}_m\},\{\bm{b}_1,\bm{b}_2,\cdots,\bm{b}_n\}$をその基底とする。$(\bm{b}_j)$が$\{(\bm{a}_i)\}$の線形結合で表され、また$(\bm{a}_i)$が$\{(\bm{b}_j)\}$の線形結合で表されるならば$m=n$であることを示す。\par
+まず、「$(\bm{b}_j)$が$\{(\bm{a}_i)\}$の線形結合で表され、また$(\bm{a}_i)$が$\{(\bm{b}_j)\}$の線形結合で表される」とき、$\{(\bm{a}_i)\}\sim\{(\bm{b}_j)\}$と表す。ここで、$\{(\bm{a}_i)\}\sim\{(\bm{b}_j)\}かつ\{(\bm{b}_j)\}\sim\{(\bm{c}_k)\}$ならば$\{(\bm{a}_i)\}\sim\{(\bm{c}_k)\}$である。なぜなら
+\[\forall i,j,k,~\exists! x_i,y_j,~\bm{b}_j=\sum_i x_i\bm{a}_i,~\bm{c}_k=\sum_j y_j\bm{b}_j~\therefore~\bm{c}_k=\sum_{i,j} x_iy_j\bm{a}_i\]
+だからである。ここで、$\{(\bm{a}_i)\}\sim\{(\bm{b}_j)\}$ならば$\{(\bm{a}_i)\}$の何れかを$(\bm{b}_j)$のうち適当な一つで置き換え、かつそれらが一次独立であるような組$\{\bm{a}_1,\bm{a}_2,\cdots,\bm{a}_{m-1},\bm{b}_{j_r}\}$を作ることができる。なぜなら、$\{\bm{a}_1,\bm{a}_2,\cdots,\bm{a}_{m-1}\}$は$\{\bm{a}_1,\bm{a}_2,\cdots,\bm{a}_m\}$と$\sim$の関係にはなく、従って$\{(\bm{b}_j)\}$の何れかはこれと一次独立であるからである。\\
+これについて$\{\bm{a}_1,\bm{a}_2,\cdots,\bm{a}_{m-1},\bm{b}_{j_m}\}\sim\{\bm{a}_1,\bm{a}_2,\cdots,\bm{a}_m\}$が成り立ち、さらにこのような操作は続けて行うことができるから、最終的に
+\[\{\bm{b}_{j_1},\bm{b}_{j_2},\cdots,\bm{b}_{j_m}\}\sim\{\bm{b}_1,\bm{b}_2,\cdots,\bm{b}_n\}\]
+を得る。従って$m=n$である。\qed\\\par
+さて基底の個数が一意的であるということは、これを線形空間を特徴づける値として用いることができる。\\
+\defi{2.2.1a}線形空間$V$の一つの基底を$B=\{\bm{b}_1,\bm{b}_2,\cdots,\bm{b}_n\}$とするとき、$V$の\textbf{次元}を
+\[\mathrm{dim}V:=\mathrm{card}B=n\]
+と定義する。\textbf{次元は基底の取り方に依らず一意に定まる}。\\\par
+実は、有限個の基底が取れない場合があり、この場合については別な取り扱いが必要である。\\
+\defi{2.2.1b}線形空間$V$の基底$B$に関して$\mathrm{card}B=\aleph_0$であるとき
+\[\mathrm{dim}V=\infty\]
+と書き、このとき$V$は\textbf{無限次元}であるという。\\\par
+ここでは無限次元については深入りしない。深淵なので。
+%subsection終わり
+
+\subsection{行列の導入}
+ここでは行列というものを導入する。モチベは至って単純だが、その構築に当たっては遠回りを強いられることになる。ただ、この遠回りには十分な価値があることが後にわかるだろう。\\
+\motiv 以下の$n$元連立一次方程式を考える。(ただし$(f_i)$は線形関数とする)
+\[\begin{pmatrix}f_1(x_1,x_2,\cdots,x_n)\\f_2(x_1,x_2,\cdots,x_n)\\\vdots\\f_n(x_1,x_2,\cdots,x_n)\end{pmatrix}=\begin{pmatrix}y_1\\y_2\\\vdots\\y_n\end{pmatrix}\]
+これを「解く」とは、$(x_i)$を求めることである。しかしどうにもこの式は見栄えが悪い。そこで、例えば
+\[A\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}=\begin{pmatrix}y_1\\y_2\\\vdots\\y_n\end{pmatrix}\]
+即ち
+\[A\bm{x}=\bm{y}\]
+という形になれば求めるべき解が顕わになってわかりやすい。そこで然るような$A$を考えたい。\\
+\build $V,W$を、それぞれ$\mathrm{dim}V=m,\mathrm{dim}W=n$なる実数体$\mathbb{R}$上の線形空間とし、その間の線形写像$\mu:V \to W$を考える。先立って以下が成り立つことを確認する。\\
+\prop{2.3.1}~任意の線形空間から次元が等しいユークリッド空間への同型写像が存在する。\\\par
+まず、2.2で述べたように線形空間とはユークリッド空間を拡張した概念であり、同じ数学的構造を持つ。\\
+ここで、$V$の基底を一つ固定し、$\langle\bm{v}_1,\bm{v}_2,\cdots,\bm{v}_m\rangle$とすると
+\[\forall \bm{v} \in V,\exists ! (x_1,x_2,\cdots,x_m),\bm{v}=\sum_{i=1}^mx_i\bm{v}_i\]
+ここで、写像$f_V$を
+\[f_V:V\to\mathbb{R}^m:\sum_{i=1}^mx_i\bm{v}_i\mapsto\begin{pmatrix}x_1\\x_2\\\vdots\\x_m\end{pmatrix}\]
+とすれば、これは明らかに数学的構造を保つ逆像$f_V^{-1}$が考えられる。よって$f_V$は同型写像である。\par
+同様にして、同型写像$f_W:W\to\mathbb{R}^n$も考えられる。ここで、ユークリッド空間の間の変換$\varphi$を考えることにより、考察対象である$\mu$は
+\[\mu=f_W^{-1} \circ \varphi \circ f_V\]
+%$\left. \begin{array}{ccc}
+%	V&\overset{\mu}{\longrightarrow}&W\\
+%	\rotatebox{90}{$\overset{f_V}{\cong}$}~~&{}&\rotatebox{90}{$\overset{f_W}{\cong}$}~~~\\
+%	~~\mathbb{R}^m&\overset{\varphi}{\longrightarrow}&\mathbb{R}^n
+%\end{array} \right.$
+% https://q.uiver.app/?q=WzAsNCxbMCwwLCJWIl0sWzIsMCwiVyJdLFswLDIsIlxcbWF0aGJie1J9Xm0iXSxbMiwyLCJcXG1hdGhiYntSfV5uIl0sWzAsMSwiXFxtdSJdLFsyLDMsIlxcdmFycGhpIl0sWzAsMiwiXFxjb25nIiwxXSxbMSwzLCJcXGNvbmciLDFdXQ==
+$\begin{tikzcd}
+	V && W \\
+	\\
+	{\mathbb{R}^m} && {\mathbb{R}^n}
+	\arrow["\mu", from=1-1, to=1-3]
+	\arrow["\varphi", from=3-1, to=3-3]
+	\arrow["\cong"{description}, from=1-1, to=3-1]
+	\arrow["\cong"{description}, from=1-3, to=3-3]
+\end{tikzcd}$
+と表せる(左の可換図式を見よ)から、この$\varphi$の素性を探っていく。まず、定義より
+\[\varphi:\mathbb{R}^m \to \mathbb{R}^n:\begin{pmatrix}\bm{v}_1\\\bm{v}_2\\\vdots\\\bm{v}_m\end{pmatrix}\mapsto\begin{pmatrix}\bm{w}_1\\\bm{w}_2\\\vdots\\\bm{w}_n\end{pmatrix}\]
+であるから、これを成分表示すると
+\[\begin{array}{ccc}\varphi_1(\bm{v}_1,\bm{v}_2,\cdots,\bm{v}_m)=\bm{w}_1\\\varphi_2(\bm{v}_1,\bm{v}_2,\cdots,\bm{v}_m)=\bm{w}_2\\\vdots\\\varphi_n(\bm{v}_1,\bm{v}_2,\cdots,\bm{v}_m)=\bm{w}_n\end{array}\]
+特に、$(\bm{v}_i)$の一つ一つが変換されていることを強調すると
+\[\begin{pmatrix}\varphi_{11}(\bm{v}_1)&\varphi_{12}(\bm{v}_2)&\cdots&\varphi_{1m}(\bm{v}_m)\\\varphi_{21}(\bm{v}_1)&\varphi_{22}(\bm{v}_2)&{}&\varphi_{2m}(\bm{v}_m)\\\vdots&{}&\ddots&\vdots\\\varphi_{n1}(\bm{v}_1)&\varphi_{n2}(\bm{v}_2)&\cdots&\varphi_{nm}(\bm{v}_m)\end{pmatrix}=\begin{pmatrix}\bm{w}_1\\\bm{w}_2\\\vdots\\\bm{w}_n\end{pmatrix}\]
+何やら縦横に式が並んだものが現れた。これを扱いやすい形にするため、作用素$f_{nm}$を
+\[f_{nm}\bm{v}_m=\varphi_{nm}(\bm{v}_m)\]
+となるようにし、さらにこの長方形状のものとベクトルとの積を
+\[\begin{pmatrix}f_{11}&f_{12}&\cdots&f_{1m}\\f_{21}&f_{22}&{}&f_{2m}\\\vdots&{}&\ddots&\vdots\\f_{n1}&f_{n2}&\cdots&f_{nm}\end{pmatrix}\begin{pmatrix}\bm{v}_1\\\bm{v}_2\\\vdots\\\bm{v}_m\end{pmatrix}:=\begin{pmatrix}f_{11}\bm{v}_1+f_{12}\bm{v}_2+\cdots+f_{1m}\bm{v}_m\\f_{21}\bm{v}_1+f_{22}\bm{v}_2+\cdots+f_{2m}\bm{v}_m\\\vdots\\f_{n1}\bm{v}_1+f_{n2}\bm{v}_2+\cdots+f_{nm}\bm{v}_m\end{pmatrix}\]
+となるように定義すると、上式の右辺は$(\varphi_i(\bm{v}))$即ち$\bm{w}$それ自身であるから
+\[(f_{ij})\bm{v}=\bm{w}\]
+ここで、$V,W$の体を$\mathbb{R}$としているから、実は$(f_{ij})\in\mathbb{R}$である。\par
+このように数字を長方形状に並べたものを\textbf{行列}という。体$\mathbb{K}$の元を並べて作られた行列を\textbf{体}$\mathbb{K}$\textbf{上の行列}という。特にここでは$(f_{ij})$を$\varphi$の\textbf{表現行列}、または$V$から$W$への\textbf{基底変換行列}ともいう。ここでは実数体$\mathbb{R}$上の行列を扱ったが、同様にして任意の体上で定義できる。\par
+さて上記の定義式は便利である。なぜなら、右辺のような線形結合の形を行列とベクトルの積に分解することができるからである。2.1節で述べたことを思い出せば、$n$元連立方程式は
+\[\begin{pmatrix}f_1(x_1,x_2,\cdots,x_n)\\f_2(x_1,x_2,\cdots,x_n)\\\vdots\\f_n(x_1,x_2,\cdots,x_n)\end{pmatrix}=\begin{pmatrix}y_1\\y_2\\\vdots\\y_n\end{pmatrix}\]
+とベクトルの形で表せるのであった。ここで$f_i$が線形である場合は
+\[\begin{pmatrix}f_1(x_1,x_2,\cdots,x_n)\\f_2(x_1,x_2,\cdots,x_n)\\\vdots\\f_n(x_1,x_2,\cdots,x_n)\end{pmatrix}=\begin{pmatrix}f_{11}x_1+f_{12}x_2+\cdots+f_{1n}x_n\\f_{21}x_1+f_{22}x_2+\cdots+f_{2n}x_n\\\vdots\\f_{n1}x_1+f_{n2}x_2+\cdots+f_{nn}x_n\end{pmatrix}\]
+であるから、$(x_i)$をベクトルとみなすことで行列とベクトルの積の形
+\[\begin{pmatrix}f_{11}&f_{12}&\cdots&f_{1n}\\f_{21}&f_{22}&{}&f_{2n}\\\vdots&{}&\ddots&\vdots\\f_{n1}&f_{n2}&\cdots&f_{nn}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}=\begin{pmatrix}y_1\\y_2\\\vdots\\y_n\end{pmatrix}\]
+で連立一次方程式を表すことができる。ここで登場する行列は見ての通り連立方程式から係数だけをそのまま抜き出して並べたものであり、\textbf{係数行列}と呼ばれる。\\\par
+行列の本懐は線形空間の間の写像であるのだ！次節では行列の演算について考える。\newpage
+%subsection終わり
+
+\subsection{行列の演算 - 和とスカラー倍}
+\motiv 行列というものを代数学的に導入したわけだが、これを連立一次方程式に応用したいという立場に立った時、それについて詳しく知っていて且つ適切な定義を行う必要がある。実は「適切な定義」により行列は線形空間を為し、それ自身が群になる。従って多少扱いやすくなる。これのためにまずは和とスカラー倍を定義する。\\\par
+\Build (以下、断らない限り体は全て実数体$\mathbb{R}$とする)\vspace{3pt}\par
+演算規則について考える前に、行列について基本的な事項を拾い上げていく。\\
+\begin{minipage}{3.5cm}
+\includegraphics[width=3cm]{2.4.1.png}
+\end{minipage}
+\begin{minipage}{14cm}
+行列の要素について、行列の横並びの塊を\textbf{行}、縦並びの塊を\textbf{列}という。\\
+左から順に第$\sim$列と言い、上から順に第$\sim$行と言う。\\
+各要素を\textbf{成分}と言い、特に$i$行$j$列の要素を$(i,j)$成分と言う。
+\end{minipage}
+図で青の枠で囲まれた部分が第$1$行、赤の枠で囲まれた部分が第$1$列で$a_{11}$は$(1,1)$成分である。\\
+行列を特徴づけるものとしてその大きさがあり、(行数)$\times$(列数)行列と言う。図は$m \times n$行列である。行列$A$の成分が$a_{ij}$のように与えられていて、それが$m \times n$行列であるとき、$A=(a_{ij})_{m \times n}$のように書くことがある。また、前節の通り、\uline{写像$\varphi:\mathbb{R}^n \to \mathbb{R}^m$の表現行列は$m \times n$行列である}。\par
+さて行列は、いくつかの数を含むという点で数ベクトルに似た概念である。従って、その演算規則を同様に定めるのは自然だろう。即ち\\
+\defi{2.4.1}$A=(a_{ij})_{m \times n},B=(b_{ij})_{m \times n}$と$c\in\mathbb{R}$について
+\[A+B:=(a_{ij}+b_{ij})_{m \times n},~cA:=(c \cdot a_{ij})_{m \times n}\]
+ただし、大きさが異なる行列同士の和は定義できない。\\\par
+行列の和とスカラー倍を定義したところで、以下の命題を示す。\\\par
+\prop{2.4.1}$m \times n$行列全体の集合$M_{m,n}(\mathbb{R})$は線形空間である。\\\par
+$Proof.$　定義2.4.1より、$(M_{m,n}(\mathbb{R}),+)$が加法群になることは明らかである。\\
+ここで、演算$\top:\mathbb{R} \times M_{m,n}(\mathbb{R}) \to M_{m,n}(\mathbb{R})$をスカラー倍と考えれば、定義より$M_{m,n}(\mathbb{R})$は実数体$\mathbb{R}$上の線形空間であると言える。\qed\\\par
+\prop{2.4.2}行列は線形写像である。\\\par
+$Proof.$　$A=(a_{ij})_{m \times n}$を行列とする。即ち$A:\mathbb{R}^n\to\mathbb{R}^m$である。$\bm{x},\bm{y}\in\mathbb{R}^n$と$c,d\in\mathbb{R}$に関して、\\$\bm{x}=(x_1,x_2,\cdots,x_n),\bm{y}=(y_1,y_2,\cdots,y_n)$とすれば
+\[cA\bm{x}=\begin{pmatrix}ca_{11}x_1+ca_{12}x_2+\cdots+ca_{1n}x_n\\ca_{21}x_1+ca_{22}x_2+\cdots+ca_{2n}x_n\\\vdots\\ca_{m1}x_1+ca_{m2}x_2+\cdots+ca_{mn}x_n\end{pmatrix},dA\bm{y}=\begin{pmatrix}da_{11}y_1+da_{12}y_2+\cdots+da_{1n}y_n\\da_{21}y_1+da_{22}y_2+\cdots+da_{2n}y_n\\\vdots\\da_{m1}y_1+da_{m2}y_2+\cdots+da_{mn}y_n\end{pmatrix}\]
+\[\therefore~cA\bm{x}+dA\bm{y}=\begin{pmatrix}a_{11}(cx_1+dy_1)+a_{12}(cx_2+dy_2)+\cdots+a_{1n}(cx_n+dy_n)\\a_{21}(cx_1+dy_1)+a_{22}(cx_2+dy_2)+\cdots+a_{2n}(cx_n+dy_n)\\\vdots\\a_{m1}(cx_1+dy_1)+a_{m2}(cx_2+dy_2)+\cdots+a_{mn}(cx_n+dy_n)\end{pmatrix}=A(c\bm{x}+d\bm{y})\qed\]\\\par
+我々は行列を導入する際に、線形空間の間の写像$\mu$が線形写像であること以外に条件を課していないから、以下が言える。\\
+\prop{2.4.3}任意の線形空間の間の線形写像には表現行列が存在する。
+%subsection終わり
+
+\subsection{行列の演算 - 行列の積}
+\motiv 行列は適切な演算規則を定めることにより線形空間即ち加群になることがわかった。しかしこれをより扱い易いものにするため、行列同士の積を定義して\textbf{環}の構造を入れたい。環にするだけならば例えば各成分同士で積をとる等雑多な定義があるが、せっかく我々は行列の線形写像という側面を知っているのだからこれを活かさないという手はないだろう。\par
+線形写像$\varphi:\mathbb{R}^q\to\mathbb{R}^p, \psi:\mathbb{R}^s\to\mathbb{R}^r$を考える。これらの表現行列を$A,B$とすれば
+\[A=(a_{ij})_{p \times q}, B=(b_{ij})_{r \times s}\]
+である。これらの合成写像を考える。即ち$\varphi\circ\psi:\mathbb{R}^s\to\mathbb{R}^p$である。これを考えるためには、まず$\psi$の終域と$\varphi$の始域が一致している必要があるから$q=r$を要請する。\par
+ここで行列の積が以下を満たせば都合がよい。ただし$\bm{x}\in\mathbb{R}^s$とする。
+\[\varphi\circ\psi(\bm{x})=AB\bm{x}\]
+即ち、行列の積を合成写像と考えるのである。$\varphi\circ\psi:\mathbb{R}^s\to\mathbb{R}^p$から、$AB$は$p \times s$行列になると考えられる。\\\par
+\Build(表記上の問題から文字を置き換えた)\vspace{3pt}\par
+$A=(a_{ij})_{l \times m}, B=(b_{ij})_{m \times n}$とする。要請より、$A$の列数と$B$の行数が等しいとした。\\
+$\bm{x}=(x_1,x_2,\cdots,x_n)\in\mathbb{R}^n$とする。定義より$B\bm{x}=(\displaystyle\sum_{s=1}^nx_sb_{1s},\cdots,\displaystyle\sum_{s=1}^nx_sb_{ms})\in\mathbb{R}^m$である。\\
+このままでは扱いにくいので$y_i=\displaystyle\sum_{s=1}^nx_sb_{is}$とおいて$\bm{y}=B\bm{x}=(y_1,y_2,\cdots,y_m)$とする。$A$との積をとると\\
+\[A\bm{y}=(\sum_{t=1}^my_ta_{1t},\cdots,\sum_{t=1}^my_ta_{lt})=(\sum_{s,t}x_sa_{1t}b_{ts},\cdots,\sum_{s,t}x_sa_{lt}b_{ts})\in\mathbb{R}^l\]
+即ち、$(AB\bm{x})_i=\displaystyle\sum_{s,t}x_sa_{it}b_{ts}$だから、行列と数ベクトルの積の定義を逆に用いれば
+\[(AB)_{ij}=\sum_{k=1}^na_{ik}b_{kj}\]
+と結論付けられる。明らかに$AB$は$l \times n$行列である。($(AB)_{ij}$は行列$AB$の$(i,j)$成分の意)\newpage
+さて当初の目的であった環の構造が入っているのかを確認しよう。実数体$\mathbb{R}$上の行列全体の集合$M(\mathbb{R})$と行列の和、積の組$(M(\mathbb{R}),+,\times)$と、その元$A,B,C$を考える。$A,B,C$は演算が定義できる適当な大きさであるとする。またその成分を$a_{ij},b_{ij},c_{ij}$で表す。\\\par
+\begin{itemize}
+\item $(AB)C=A(BC)$であること
+\[((AB)C)_{ij}=\sum_l((\sum_ka_{ik}b_{kl})c_{lj})=\sum_k(a_{ik}(\sum_lb_{kl}c_{lj}))=(A(BC))_{ij}\]
+添え字に注意せよ。\qed
+\item $\exists B,\forall A,BA=AB=A$であること\\
+$B=\delta_{ij}=\begin{cases}1~(i=j) \\ 0~(i \neq j)\end{cases}$と定めると
+\[(AB)_{ij}=\sum_ka_{ik}\delta_{kj}=a_{ij}\]
+同様にして$BA=A$も示される。\qed\par
+\end{itemize}
+(註)\par
+ここで登場した$B$は特に\textbf{単位行列}と呼ばれ、$E$と書かれる。積についての単位元に相当する:
+\[E=\begin{pmatrix}1&0&\cdots&0\\0&1&{}&0\\\vdots&{}&\ddots&\vdots\\0&0&\cdots&1\end{pmatrix}\]\\
+\begin{itemize}
+\item $A(B+C)=AB+AC,(A+B)C=AB+AC$であること
+\[(A(B+C))_{ij}=\sum_ka_{ik}(b_{kj}+c_{kj})=\sum_ka_{ik}b_{kj}+\sum_ka_{ik}c_{kj}=(AB)_{ij}+(AC)_{ij}\]
+これで前者が示せた。後者も同様に示される。\qed
+\end{itemize}
+以上より、$(M(\mathbb{R}),+,\times)$は環であることが結論づけられた。ここで、一つの重要な命題を述べる。\\
+\prop{2.5.1}行列の積は非可換である。即ち一般的に$AB \neq BA$である。\\\par
+このことは、実際に幾つかの具体例考えれば明らかである。この性質により行列環は\textbf{非可換環}となる。\newpage
+%subsection終わり
+
+\paragraph{補遺2.1}\par
+2章の最後に、言及し忘れていたことを纏める。\\\par
+\textbf{行列の生成する線形空間の基底と次元}\par
+線形空間$M_{m,n}(\mathbb{R})$を考える。この元の中で、$(i,j)$成分のみ$1$で、他が全て$0$であるようなものを考える。\\
+このようなものを$I_{ij}$と書き、\textbf{行列単位}と呼ぶ。これを用いれば、任意の行列$A=(a_{ij})_{m \times n} \in M_{m,n}(\mathbb{R})$は
+\[A=\sum_{i,j}a_{ij}I_{ij}\]
+と表せる。明らかに、組$\{ I_{11},I_{12},\cdots \}$は$M_{m,n}(\mathbb{R})$の基底であり
+\[\mathrm{dim}M_{m,n}(\mathbb{R})=mn\]
+が言える。(行列単位は$E$で書かれることもあるが、後述の概念と混同するので$I$とした。)\\\par
+\textbf{行列としての数ベクトル}\par
+$n$次元数ベクトル$\bm{x}=(x_1,x_2,\cdots,x_n)\in\mathbb{R}^n$は、一直線に数字が$n$個並んだ行列と同一視できる。即ち
+\[\begin{pmatrix}x_1&x_2&\cdots&x_n\end{pmatrix},\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}\]
+注意しなければならないのは、右(列ベクトル)と左(行ベクトル)で意味が大きく異なることである。なぜなら、右は$1 \times n$行列、左は$n \times 1$行列であり属する線形空間が異なるからである。行列の演算は行や列の数に制約が課されているものがあるため、これは確実に把握する必要がある。\par
+このような数ベクトルを行列の形で記述したものは、行列であるものの数ベクトルと同じくアルファベット太字で表す。\textbf{以後、ベクトルと言った場合にはこの意味の数ベクトルを指すものとする}。\par
+行列はベクトルを並べたものと考えられる。例えば、行列$A=(a_{ij})_{m \times n}$の第$j$列に当たるベクトル$(\bm{a}_j)$とすれば
+\[A=\begin{pmatrix}\bm{a}_1&\bm{a}_2&\cdots&\bm{a}_n\end{pmatrix}\]
+と書ける。必要に応じてこの記法を用いる。\par
+数ベクトルと行列の積は、行列と列ベクトルの(行列としての)積と矛盾しない。\\\par
+\textbf{正方行列と単位行列}\par
+行列の内、$n \times n$行列を$\bm{n}$\textbf{次正方行列}と呼ぶ。明らかに、$n$次正方行列は同一の線形空間内での線形写像となる。また、$n$次正方行列の中で特に2.5節で登場した
+\[E=\begin{pmatrix}1&0&\cdots&0\\0&1&{}&0\\\vdots&{}&\ddots&\vdots\\0&0&\cdots&1\end{pmatrix}\]
+は$\bm{n}$\textbf{次単位行列}と呼ばれる。\textbf{単位行列は行列単位とは異なる概念であるから注意せよ}。$E$が$n$次正方行列であることを強調するために$E_n$と書くことがある。\par
+先述の事項から明らかな通り$E$は恒等写像$id:V \to V:\bm{x}\mapsto\bm{x}$の表現行列である。
+%paragraph終わり
+%section終わり
+
+\section{連立方程式を解く}
+
+\subsection{行基本変形とLU分解}
+作成中
+\end{document}
