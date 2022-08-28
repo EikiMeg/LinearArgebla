@@ -21,3 +21,5 @@ If something is imcomplete, please mention at [Discussions](https://github.com/E
 
 10/18 タイトルを変更し、§3.1が書けたので公開。(題:ステップアップ線形代数)  
 正直この題ダサいのでキャッチーなタイトルを募集しております。
+
+現在、やる気不足につき放置中。
